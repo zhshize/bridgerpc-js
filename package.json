@@ -1,7 +1,7 @@
 {
   "name": "bridgerpc",
-  "version": "0.0.0",
-  "description": "",
+  "version": "0.0.1",
+  "description": "Bridge RPC client for browser and nodejs.",
   "keywords": [],
   "main": "dist/bridgerpc.umd.js",
   "module": "dist/bridgerpc.es5.js",
@@ -9,10 +9,10 @@
   "files": [
     "dist"
   ],
-  "author": "zhshize <joe7086543@hotmail.com>",
+  "author": "zhshize <joe7086543@gmail.com>",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/zhshize/bridgerpc-js"
   },
   "license": "MIT",
   "engines": {
