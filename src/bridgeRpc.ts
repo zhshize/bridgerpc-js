@@ -12,17 +12,30 @@ export type RpcNotificationHandler = (request: RpcRequest) => void
 
 export default class BridgeRpc {
   public constructor(url: string) {
-    this.rawSocket = new WebSocket(url)
+    this.url = url
     this.handlers = new RequestHandlerDictionary()
     this.notificationHandlers = new NotificationHandlerDictionary()
     this.callbacks = new CallbackDictionary()
-    this.initialize()
   }
 
-  public rawSocket: WebSocket
+  private _rawSocket: WebSocket | null = null
+  protected url: string
   protected handlers: RequestHandlerDictionary
   protected notificationHandlers: NotificationHandlerDictionary
   protected callbacks: CallbackDictionary
+
+  get rawSocket(): WebSocket {
+    if (this._rawSocket === null) {
+      this.connect()
+    }
+    return this._rawSocket as WebSocket
+  }
+
+  public connect() {
+    this._rawSocket = new WebSocket(this.url)
+    this._rawSocket.binaryType = 'arraybuffer'
+    this._rawSocket.onmessage = this.onMessage.bind(this)
+  }
 
   public onConnect(connected: () => void): void {
     this.rawSocket.onopen = connected
@@ -75,11 +88,6 @@ export default class BridgeRpc {
         id: null
       })
     )
-  }
-
-  protected initialize(): void {
-    this.rawSocket.binaryType = 'arraybuffer'
-    this.rawSocket.onmessage = this.onMessage.bind(this)
   }
 
   protected onMessage(event: any) {
