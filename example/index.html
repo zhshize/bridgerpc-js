@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<button onclick="connect()">connect</button>
+
+<script src="https://rawgit.com/kawanet/msgpack-lite/master/dist/msgpack.min.js"></script>
+<script src="../dist/bridgerpc.umd.js"></script>
+<script type="application/ecmascript">
+  function connect() {
+    const rpc = new bridgerpc("ws://localhost:5000");
+    rpc.onConnect(() => {
+      const req = rpc.request("greet", "joe");
+      req.then(response => {
+        console.log(response);
+      });
+    });
+
+  }
+</script>
+</body>
+</html>
