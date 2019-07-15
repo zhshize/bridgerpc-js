@@ -7,10 +7,12 @@ import msgpack from 'msgpack-lite'
 import RpcError from './rpcError'
 import OperationTimeoutError from './operationTimeoutError'
 
+export { RpcRequest, RpcResponse, RpcError, OperationTimeoutError }
+
 /**
  * RPC Request handler must process a request and return a [[RpcResponse]].
  */
-export type RpcHandler = (request: RpcRequest) => RpcResponse
+export type RpcHandler = (request: RpcRequest) => any
 
 /**
  * RPC Notification handler must process a request, nothing should be returned.
@@ -160,6 +162,12 @@ export default class BridgeRpc {
         let res: any
         try {
           res = handler(request)
+          if (!(res instanceof RpcResponse)) {
+            let generateResponse = new RpcResponse()
+            generateResponse.id = request.id
+            generateResponse.result = res
+            res = generateResponse
+          }
           if (res === undefined || res === null) {
             // Internal Error
             this.rawSocket.send(
