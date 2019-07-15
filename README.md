@@ -1,26 +1,34 @@
 # bridgerpc-js
+
 Bridge RPC client for browser and nodejs.  Typescript supported.
 [Documentation](https://zhshize.github.io/bridgerpc-js/)
 
 ## Server-side implement
+
 ASP.Net Core (C#) (server & client): [zhshize/BridgeRpcAspNetCore](https://github.com/zhshize/BridgeRpcAspNetCore)
 
 You can create a server-side implement by yourself, see 
 [Node.js server-side implement](#nodejs-server-side-implement).
 
 ## Browser
+
 bridgerpc-js needs [msgpack-lite](https://www.npmjs.com/package/msgpack-lite).
 You can broserify it or use CDN: 
+
 ```html
 <script src="https://cdnjs.cloudflare.com/ajax/libs/msgpack-lite/0.1.26/msgpack.min.js" integrity="sha256-xnDLLYKxKFwLEmQK1SkZ9I7IwmjdeURGtXUk/0WnTRo=" crossorigin="anonymous"></script>
 ```
+
 And then, include bridgerpc: 
+
 ```html
 <script src="path/to/bridgerpc.umd.js"></script>
 ```
+
 BridgeRpc UMD module is exposed on the global variable `bridgerpc`, contains 
 `RpcResonse`, `RpcRequest`, `RpcError`, and `default` actually is `BridgeRpc`.
 If you want to expose all prototype, the code below is useful: 
+
 ```ecmascript 6
 const RpcResonse = bridgerpc.RpcResonse;
 const RpcRequest = bridgerpc.RpcRequest;
@@ -29,16 +37,21 @@ const BridgeRpc = bridgerpc.default;
 ```
 
 ## Node.js
+
 Install the package: 
+
 ```
 npm i bridgerpc
 ```
+
 import:
+
 ```ecmascript 6
 import BridgeRpc from 'bridgerpc';
 ```
 
 ## Usage
+
 ```ecmascript 6
 // Initialize a client. but not connect until calling connect()
 var client = new BridgeRpc("ws://localhost/");
@@ -69,7 +82,9 @@ client.onConnect(async () => {
 ```
 
 ## Nodejs server-side implement
+
 I suggest you using Typescript to obtain more flexibility of customizing BridgeRpc.
+
 ```typescript
 import BridgeRpc from 'bridgeRpc'
 

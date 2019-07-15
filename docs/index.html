@@ -948,7 +948,8 @@ img { max-width: 100%; }
 	<div class="content-wrap">
 		<div class="tsd-panel tsd-typography">
 			<h1 id="bridgerpc-js">bridgerpc-js</h1>
-			<p>Bridge RPC client for browser and nodejs.  Typescript supported.</p>
+			<p>Bridge RPC client for browser and nodejs.  Typescript supported.
+			<a href="https://zhshize.github.io/bridgerpc-js/">Documentation</a></p>
 			<h2 id="server-side-implement">Server-side implement</h2>
 			<p>ASP.Net Core (C#) (server &amp; client): <a href="https://github.com/zhshize/BridgeRpcAspNetCore">zhshize/BridgeRpcAspNetCore</a></p>
 			<p>You can create a server-side implement by yourself, see
@@ -961,16 +962,20 @@ img { max-width: 100%; }
 			<pre><code class="language-html"><span class="hljs-tag">&lt;<span class="hljs-name">script</span> <span class="hljs-attr">src</span>=<span class="hljs-string">"path/to/bridgerpc.umd.js"</span>&gt;</span><span class="hljs-tag">&lt;/<span class="hljs-name">script</span>&gt;</span></code></pre>
 			<p>BridgeRpc UMD module is exposed on the global variable <code>bridgerpc</code>, contains
 				<code>RpcResonse</code>, <code>RpcRequest</code>, <code>RpcError</code>, and <code>default</code> actually is <code>BridgeRpc</code>.
-				If you want to expose all prototype, the code below is useful:
-				<code>`</code>ecmascript 6
+			If you want to expose all prototype, the code below is useful: </p>
+			<p><code>`</code>ecmascript 6
 				const RpcResonse = bridgerpc.RpcResonse;
 				const RpcRequest = bridgerpc.RpcRequest;
 				const RpcError = bridgerpc.RpcError;
 			const BridgeRpc = bridgerpc.default;</p>
 			<pre><code>
 <span class="hljs-comment">## Node.js</span>
-<span class="hljs-keyword">Install</span> the <span class="hljs-keyword">package</span>: </code></pre><p>npm i bridgerpc</p>
-			<pre><code><span class="hljs-keyword">import</span>:
+
+<span class="hljs-keyword">Install</span> the <span class="hljs-keyword">package</span>: 
+</code></pre><p>npm i bridgerpc</p>
+			<pre><code>
+<span class="hljs-keyword">import</span>:
+
 ```ecmascript <span class="hljs-number">6</span>
 <span class="hljs-keyword">import</span> BridgeRpc <span class="hljs-keyword">from</span> <span class="hljs-string">'bridgerpc'</span>;</code></pre><h2 id="usage">Usage</h2>
 			<p><code>`</code>ecmascript 6
@@ -997,7 +1002,9 @@ img { max-width: 100%; }
 <span class="hljs-built_in">console</span>.log(res.result);</code></pre><p>});</p>
 			<pre><code>
 ## <span class="hljs-type">Nodejs</span> server-side implement
+
 <span class="hljs-type">I</span> suggest you using <span class="hljs-type">Typescript</span> to obtain more flexibility of customizing <span class="hljs-type">BridgeRpc</span>.
+
 ```typescript
 <span class="hljs-keyword">import</span> <span class="hljs-type">BridgeRpc</span> from <span class="hljs-symbol">'bridgeRp</span>c'
 
@@ -1050,7 +1057,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Rpc<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/332ee73/src/bridgeRpc.ts#L15">bridgeRpc.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/a7c7833/src/bridgeRpc.ts#L15">bridgeRpc.ts:15</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1086,7 +1093,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Rpc<wbr>Notification<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/332ee73/src/bridgeRpc.ts#L20">bridgeRpc.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/a7c7833/src/bridgeRpc.ts#L20">bridgeRpc.ts:20</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
