@@ -29,7 +29,7 @@ BridgeRpc UMD module is exposed on the global variable `bridgerpc`, contains
 `RpcResonse`, `RpcRequest`, `RpcError`, and `default` actually is `BridgeRpc`.
 If you want to expose all prototype, the code below is useful: 
 
-```ecmascript 6
+```javascript
 const RpcResonse = bridgerpc.RpcResonse;
 const RpcRequest = bridgerpc.RpcRequest;
 const RpcError = bridgerpc.RpcError;
@@ -46,13 +46,13 @@ npm i bridgerpc
 
 import:
 
-```ecmascript 6
+```javascript
 import BridgeRpc from 'bridgerpc';
 ```
 
 ## Usage
 
-```ecmascript 6
+```javascript
 // Initialize a client. but not connect until calling connect()
 var client = new BridgeRpc("ws://localhost/");
 
