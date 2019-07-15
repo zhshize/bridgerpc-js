@@ -1,5 +1,6 @@
 # bridgerpc-js
 Bridge RPC client for browser and nodejs.  Typescript supported.
+[Documentation](https://zhshize.github.io/bridgerpc-js/)
 
 ## Server-side implement
 ASP.Net Core (C#) (server & client): [zhshize/BridgeRpcAspNetCore](https://github.com/zhshize/BridgeRpcAspNetCore)
