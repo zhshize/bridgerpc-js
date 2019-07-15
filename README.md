@@ -4,6 +4,9 @@ Bridge RPC client for browser and nodejs.  Typescript supported.
 ## Server-side implement
 ASP.Net Core (C#) (server & client): [zhshize/BridgeRpcAspNetCore](https://github.com/zhshize/BridgeRpcAspNetCore)
 
+You can create a server-side implement by yourself, see 
+[Node.js server-side implement](#nodejs-server-side-implement).
+
 ## Browser
 bridgerpc-js needs [msgpack-lite](https://www.npmjs.com/package/msgpack-lite).
 You can broserify it or use CDN: 
@@ -13,6 +16,15 @@ You can broserify it or use CDN:
 And then, include bridgerpc: 
 ```html
 <script src="path/to/bridgerpc.umd.js"></script>
+```
+BridgeRpc UMD module is exposed on the global variable `bridgerpc`, contains 
+`RpcResonse`, `RpcRequest`, `RpcError`, and `default` actually is `BridgeRpc`.
+If you want to expose all prototype, the code below is useful: 
+```ecmascript 6
+const RpcResonse = bridgerpc.RpcResonse;
+const RpcRequest = bridgerpc.RpcRequest;
+const RpcError = bridgerpc.RpcError;
+const BridgeRpc = bridgerpc.default;
 ```
 
 ## Node.js
@@ -53,4 +65,22 @@ client.onConnect(async () => {
     const res = await client.request("greet", "Joe");
     console.log(res.result);
 });
+```
+
+## Nodejs server-side implement
+I suggest you using Typescript to obtain more flexibility of customizing BridgeRpc.
+```typescript
+import BridgeRpc from 'bridgeRpc'
+
+class RpcConnection extends BridgeRpc {
+  connect() {
+    // Hack HERE!  Replace it to your WebSocket object (by adding a setter) from 
+    // server (i.e. express.js).  The object you passed must be suitable for
+    // https://developer.mozilla.org/en-US/docs/Web/API/WebSocket
+    this._rawSocket = new WebSocket()
+
+    this._rawSocket.binaryType = 'arraybuffer'
+    this._rawSocket.onmessage = this.onMessage.bind(this)
+  }
+}
 ```

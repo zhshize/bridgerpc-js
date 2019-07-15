@@ -37,7 +37,7 @@ export default class BridgeRpc {
     this.callbacks = new CallbackDictionary()
   }
 
-  private _rawSocket: WebSocket | null = null
+  protected _rawSocket: WebSocket | null = null
   protected url: string
   protected handlers: RequestHandlerDictionary
   protected notificationHandlers: NotificationHandlerDictionary
