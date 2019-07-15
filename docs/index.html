@@ -963,59 +963,53 @@ img { max-width: 100%; }
 			<p>BridgeRpc UMD module is exposed on the global variable <code>bridgerpc</code>, contains
 				<code>RpcResonse</code>, <code>RpcRequest</code>, <code>RpcError</code>, and <code>default</code> actually is <code>BridgeRpc</code>.
 			If you want to expose all prototype, the code below is useful: </p>
-			<p><code>`</code>ecmascript 6
-				const RpcResonse = bridgerpc.RpcResonse;
-				const RpcRequest = bridgerpc.RpcRequest;
-				const RpcError = bridgerpc.RpcError;
-			const BridgeRpc = bridgerpc.default;</p>
-			<pre><code>
-<span class="hljs-comment">## Node.js</span>
+			<pre><code class="language-javascript"><span class="hljs-keyword">const</span> RpcResonse = bridgerpc.RpcResonse;
+<span class="hljs-keyword">const</span> RpcRequest = bridgerpc.RpcRequest;
+<span class="hljs-keyword">const</span> RpcError = bridgerpc.RpcError;
+<span class="hljs-keyword">const</span> BridgeRpc = bridgerpc.default;</code></pre>
+			<h2 id="node-js">Node.js</h2>
+			<p>Install the package: </p>
+			<pre><code>npm <span class="hljs-selector-tag">i</span> bridgerpc</code></pre><p>import:</p>
+			<pre><code class="language-javascript"><span class="hljs-keyword">import</span> BridgeRpc <span class="hljs-keyword">from</span> <span class="hljs-string">'bridgerpc'</span>;</code></pre>
+			<h2 id="usage">Usage</h2>
+			<pre><code class="language-javascript"><span class="hljs-comment">// Initialize a client. but not connect until calling connect()</span>
+<span class="hljs-keyword">var</span> client = <span class="hljs-keyword">new</span> BridgeRpc(<span class="hljs-string">"ws://localhost/"</span>);
 
-<span class="hljs-keyword">Install</span> the <span class="hljs-keyword">package</span>: 
-</code></pre><p>npm i bridgerpc</p>
-			<pre><code>
-<span class="hljs-keyword">import</span>:
+<span class="hljs-comment">// Registering a request handler for method 'echo'</span>
+client.onRequest(<span class="hljs-string">"echo"</span>, request =&gt; {
+    <span class="hljs-keyword">return</span> request.data;
+    <span class="hljs-comment">// If you didn't return a RpcResponse object, the return value will be set as </span>
+    <span class="hljs-comment">// result of a new RpcRsponse object.</span>
+    <span class="hljs-comment">// Or you can return a RpcResponse object:</span>
+    <span class="hljs-comment">// var r = new RpcResponse();</span>
+    <span class="hljs-comment">// r.result = request.data;</span>
+    <span class="hljs-comment">// return r;</span>
+});
 
-```ecmascript <span class="hljs-number">6</span>
-<span class="hljs-keyword">import</span> BridgeRpc <span class="hljs-keyword">from</span> <span class="hljs-string">'bridgerpc'</span>;</code></pre><h2 id="usage">Usage</h2>
-			<p><code>`</code>ecmascript 6
-				// Initialize a client. but not connect until calling connect()
-			var client = new BridgeRpc(&quot;ws://localhost/&quot;);</p>
-			<p>// Registering a request handler for method &#39;echo&#39;
-				client.onRequest(&quot;echo&quot;, request =&gt; {
-				return request.data;
-				// If you didn&#39;t return a RpcResponse object, the return value will be set as
-				// result of a new RpcRsponse object.
-				// Or you can return a RpcResponse object:
-				// var r = new RpcResponse();
-				// r.result = request.data;
-				// return r;
-			});</p>
-			<p>// Registering a notification handler for method &#39;notify&#39;
-				client.onNotify(&quot;notfiy&quot;, request =&gt; {
-				console.log(request.data);
-			});</p>
-			<p>// Some staff when connected
-			client.onConnect(async () =&gt; {</p>
-			<pre><code><span class="hljs-comment">// Requesting server-side</span>
-<span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">"greet"</span>, <span class="hljs-string">"Joe"</span>);
-<span class="hljs-built_in">console</span>.log(res.result);</code></pre><p>});</p>
-			<pre><code>
-## <span class="hljs-type">Nodejs</span> server-side implement
+<span class="hljs-comment">// Registering a notification handler for method 'notify'</span>
+client.onNotify(<span class="hljs-string">"notfiy"</span>, request =&gt; {
+    <span class="hljs-built_in">console</span>.log(request.data);
+});
 
-<span class="hljs-type">I</span> suggest you using <span class="hljs-type">Typescript</span> to obtain more flexibility of customizing <span class="hljs-type">BridgeRpc</span>.
+<span class="hljs-comment">// Some staff when connected</span>
+client.onConnect(<span class="hljs-keyword">async</span> () =&gt; {
 
-```typescript
-<span class="hljs-keyword">import</span> <span class="hljs-type">BridgeRpc</span> from <span class="hljs-symbol">'bridgeRp</span>c'
+    <span class="hljs-comment">// Requesting server-side</span>
+    <span class="hljs-keyword">const</span> res = <span class="hljs-keyword">await</span> client.request(<span class="hljs-string">"greet"</span>, <span class="hljs-string">"Joe"</span>);
+    <span class="hljs-built_in">console</span>.log(res.result);
+});</code></pre>
+			<h2 id="nodejs-server-side-implement">Nodejs server-side implement</h2>
+			<p>I suggest you using Typescript to obtain more flexibility of customizing BridgeRpc.</p>
+			<pre><code class="language-typescript"><span class="hljs-keyword">import</span> BridgeRpc <span class="hljs-keyword">from</span> <span class="hljs-string">'bridgeRpc'</span>
 
-<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RpcConnection</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">BridgeRpc</span> </span>{
+<span class="hljs-keyword">class</span> RpcConnection <span class="hljs-keyword">extends</span> BridgeRpc {
   connect() {
     <span class="hljs-comment">// Hack HERE!  Replace it to your WebSocket object (by adding a setter) from </span>
     <span class="hljs-comment">// server (i.e. express.js).  The object you passed must be suitable for</span>
     <span class="hljs-comment">// https://developer.mozilla.org/en-US/docs/Web/API/WebSocket</span>
-    <span class="hljs-keyword">this</span>._rawSocket = <span class="hljs-keyword">new</span> <span class="hljs-type">WebSocket</span>()
+    <span class="hljs-keyword">this</span>._rawSocket = <span class="hljs-keyword">new</span> WebSocket()
 
-    <span class="hljs-keyword">this</span>._rawSocket.binaryType = <span class="hljs-symbol">'arraybuffe</span>r'
+    <span class="hljs-keyword">this</span>._rawSocket.binaryType = <span class="hljs-string">'arraybuffer'</span>
     <span class="hljs-keyword">this</span>._rawSocket.onmessage = <span class="hljs-keyword">this</span>.onMessage.bind(<span class="hljs-keyword">this</span>)
   }
 }</code></pre>
@@ -1057,7 +1051,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Rpc<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/a7c7833/src/bridgeRpc.ts#L15">bridgeRpc.ts:15</a></li>
+						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/265cb2f/src/bridgeRpc.ts#L15">bridgeRpc.ts:15</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
@@ -1093,7 +1087,7 @@ img { max-width: 100%; }
 				<div class="tsd-signature tsd-kind-icon">Rpc<wbr>Notification<wbr>Handler<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">function</span></div>
 				<aside class="tsd-sources">
 					<ul>
-						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/a7c7833/src/bridgeRpc.ts#L20">bridgeRpc.ts:20</a></li>
+						<li>Defined in <a href="https://github.com/zhshize/bridgerpc-js/blob/265cb2f/src/bridgeRpc.ts#L20">bridgeRpc.ts:20</a></li>
 					</ul>
 				</aside>
 				<div class="tsd-comment tsd-typography">
