@@ -32,7 +32,7 @@ var RpcResponse = /** @class */ (function () {
             result: this.result,
             error: null
         };
-        if (this.error !== null || this.error !== undefined) {
+        if (this.error !== null && this.error !== undefined) {
             var error = this.error;
             r.error = {
                 code: error.code,

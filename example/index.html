@@ -14,6 +14,10 @@
   const BridgeRpc = bridgerpc.default;
   function connect() {
     const rpc = new BridgeRpc("wss://localhost:5001/");
+    rpc.onRequest("sayHi", (request) => {
+      console.log(request);
+      return "gogo";
+    });
     rpc.onConnect(() => {
       const req = rpc.request("greet", "joe");
       req.then(response => {

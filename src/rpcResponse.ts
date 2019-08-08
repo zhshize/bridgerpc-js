@@ -14,7 +14,7 @@ export default class RpcResponse {
       result: this.result,
       error: null
     }
-    if (this.error !== null || this.error !== undefined) {
+    if (this.error !== null && this.error !== undefined) {
       const error = this.error as RpcError
       r.error = {
         code: error.code,
