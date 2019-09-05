@@ -238,7 +238,7 @@ export default class BridgeRpc {
     const error = new RpcError()
     error.code = -3
     error.message = 'Method not found.'
-    error.data = request
+    error.setData(request)
     const response = new RpcResponse()
     response.error = error
     response.result = null
@@ -254,7 +254,7 @@ export default class BridgeRpc {
     const err = new RpcError()
     err.code = -10
     err.message = message
-    err.data = error
+    err.setData(error)
     const response = new RpcResponse()
     response.error = err
     response.result = null

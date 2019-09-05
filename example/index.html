@@ -11,17 +11,19 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/msgpack-lite/0.1.26/msgpack.min.js" integrity="sha256-xnDLLYKxKFwLEmQK1SkZ9I7IwmjdeURGtXUk/0WnTRo=" crossorigin="anonymous"></script>
 <script src="../dist/bridgerpc.umd.js"></script>
 <script type="application/ecmascript">
+  // import msgpack from 'msgpack-lite';
+
   const BridgeRpc = bridgerpc.default;
   function connect() {
     const rpc = new BridgeRpc("wss://localhost:5001/");
     rpc.onRequest("sayHi", (request) => {
-      console.log(request);
-      return "gogo";
+      console.log(msgpack.decode(request.data));
+      return msgpack.encode("gogo");
     });
     rpc.onConnect(() => {
-      const req = rpc.request("greet", "joe");
+      const req = rpc.request("greet", msgpack.encode("joe"));
       req.then(response => {
-        console.log(response);
+        console.log(msgpack.decode(response));
       });
     });
   }

@@ -7,6 +7,14 @@ export default class RpcResponse {
   public result: any = null
   public error: RpcError | null = null
 
+  public setResult(obj: any): void {
+    this.result = msgpack.encode(obj)
+  }
+
+  public getResult<T>(): T {
+    return msgpack.decode(this.result) as T
+  }
+
   public encodeToMessagePack(): any {
     const r: any = {
       bridgerpc: this.bridgerpc,
