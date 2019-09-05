@@ -205,7 +205,7 @@ var BridgeRpc = /** @class */ (function () {
         var error = new rpcError_1.default();
         error.code = -3;
         error.message = 'Method not found.';
-        error.data = request;
+        error.setData(request);
         var response = new rpcResponse_1.default();
         response.error = error;
         response.result = null;
@@ -216,7 +216,7 @@ var BridgeRpc = /** @class */ (function () {
         var err = new rpcError_1.default();
         err.code = -10;
         err.message = message;
-        err.data = error;
+        err.setData(error);
         var response = new rpcResponse_1.default();
         response.error = err;
         response.result = null;

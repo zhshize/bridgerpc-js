@@ -8,6 +8,12 @@ var RpcRequest = /** @class */ (function () {
         this.method = '';
         this.data = null;
     }
+    RpcRequest.prototype.setData = function (obj) {
+        this.data = msgpack_lite_1.default.encode(obj);
+    };
+    RpcRequest.prototype.getData = function () {
+        return msgpack_lite_1.default.decode(this.data);
+    };
     RpcRequest.prototype.encodeToMessagePack = function () {
         return msgpack_lite_1.default.encode({
             bridgerpc: this.bridgerpc,

@@ -7,6 +7,12 @@ var RpcRequest = /** @class */ (function () {
         this.method = '';
         this.data = null;
     }
+    RpcRequest.prototype.setData = function (obj) {
+        this.data = msgpack.encode(obj);
+    };
+    RpcRequest.prototype.getData = function () {
+        return msgpack.decode(this.data);
+    };
     RpcRequest.prototype.encodeToMessagePack = function () {
         return msgpack.encode({
             bridgerpc: this.bridgerpc,
@@ -25,6 +31,12 @@ var RpcResponse = /** @class */ (function () {
         this.result = null;
         this.error = null;
     }
+    RpcResponse.prototype.setResult = function (obj) {
+        this.result = msgpack.encode(obj);
+    };
+    RpcResponse.prototype.getResult = function () {
+        return msgpack.decode(this.result);
+    };
     RpcResponse.prototype.encodeToMessagePack = function () {
         var r = {
             bridgerpc: this.bridgerpc,
@@ -51,6 +63,12 @@ var RpcError = /** @class */ (function () {
         this.message = '';
         this.data = null;
     }
+    RpcError.prototype.setData = function (obj) {
+        this.data = msgpack.encode(obj);
+    };
+    RpcError.prototype.getData = function () {
+        return msgpack.decode(this.data);
+    };
     return RpcError;
 }());
 
@@ -283,7 +301,7 @@ var BridgeRpc = /** @class */ (function () {
         var error = new RpcError();
         error.code = -3;
         error.message = 'Method not found.';
-        error.data = request;
+        error.setData(request);
         var response = new RpcResponse();
         response.error = error;
         response.result = null;
@@ -294,7 +312,7 @@ var BridgeRpc = /** @class */ (function () {
         var err = new RpcError();
         err.code = -10;
         err.message = message;
-        err.data = error;
+        err.setData(error);
         var response = new RpcResponse();
         response.error = err;
         response.result = null;

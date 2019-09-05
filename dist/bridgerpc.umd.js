@@ -1,7 +1,7 @@
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('msgpack-lite')) :
   typeof define === 'function' && define.amd ? define(['exports', 'msgpack-lite'], factory) :
-  (factory((global.bridgerpc = {}),global.msgpack));
+  (factory((global.bridgeRpc = {}),global.msgpack));
 }(this, (function (exports,msgpack) { 'use strict';
 
   msgpack = msgpack && msgpack.hasOwnProperty('default') ? msgpack['default'] : msgpack;
@@ -13,6 +13,12 @@
           this.method = '';
           this.data = null;
       }
+      RpcRequest.prototype.setData = function (obj) {
+          this.data = msgpack.encode(obj);
+      };
+      RpcRequest.prototype.getData = function () {
+          return msgpack.decode(this.data);
+      };
       RpcRequest.prototype.encodeToMessagePack = function () {
           return msgpack.encode({
               bridgerpc: this.bridgerpc,
@@ -31,6 +37,12 @@
           this.result = null;
           this.error = null;
       }
+      RpcResponse.prototype.setResult = function (obj) {
+          this.result = msgpack.encode(obj);
+      };
+      RpcResponse.prototype.getResult = function () {
+          return msgpack.decode(this.result);
+      };
       RpcResponse.prototype.encodeToMessagePack = function () {
           var r = {
               bridgerpc: this.bridgerpc,
@@ -57,6 +69,12 @@
           this.message = '';
           this.data = null;
       }
+      RpcError.prototype.setData = function (obj) {
+          this.data = msgpack.encode(obj);
+      };
+      RpcError.prototype.getData = function () {
+          return msgpack.decode(this.data);
+      };
       return RpcError;
   }());
 
@@ -289,7 +307,7 @@
           var error = new RpcError();
           error.code = -3;
           error.message = 'Method not found.';
-          error.data = request;
+          error.setData(request);
           var response = new RpcResponse();
           response.error = error;
           response.result = null;
@@ -300,7 +318,7 @@
           var err = new RpcError();
           err.code = -10;
           err.message = message;
-          err.data = error;
+          err.setData(error);
           var response = new RpcResponse();
           response.error = err;
           response.result = null;
