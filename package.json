@@ -1,6 +1,6 @@
 {
   "name": "bridgerpc",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "Bridge RPC client for browser and nodejs.",
   "keywords": [],
   "main": "dist/bridgerpc.umd.js",
