@@ -12,14 +12,7 @@ You can create a server-side implement by yourself, see
 
 ## Browser
 
-bridgerpc-js needs [msgpack-lite](https://www.npmjs.com/package/msgpack-lite).
-You can broserify it or use CDN: 
-
-```html
-<script src="https://cdnjs.cloudflare.com/ajax/libs/msgpack-lite/0.1.26/msgpack.min.js" integrity="sha256-xnDLLYKxKFwLEmQK1SkZ9I7IwmjdeURGtXUk/0WnTRo=" crossorigin="anonymous"></script>
-```
-
-And then, include bridgerpc: 
+Include bridgerpc: 
 
 ```html
 <script src="path/to/bridgerpc.umd.js"></script>
