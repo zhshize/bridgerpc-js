@@ -6,10 +6,10 @@ export default class RpcError {
   public data: any = null
 
   public setData(obj: any): void {
-    this.data = msgpack.encode(obj)
+    this.data = obj
   }
 
   public getData<T>(): T {
-    return msgpack.decode(this.data) as T
+    return this.data as T
   }
 }

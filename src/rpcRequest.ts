@@ -7,19 +7,14 @@ export default class RpcRequest {
   public data: any = null
 
   public setData(obj: any): void {
-    this.data = msgpack.encode(obj)
+    this.data = obj
   }
 
   public getData<T>(): T {
-    return msgpack.decode(this.data) as T
+    return this.data as T
   }
 
-  public encodeToMessagePack(): any {
-    return msgpack.encode({
-      bridgerpc: this.bridgerpc,
-      id: this.id,
-      method: this.method,
-      data: this.data
-    })
+  public encode(): string {
+    return JSON.stringify(this)
   }
 }

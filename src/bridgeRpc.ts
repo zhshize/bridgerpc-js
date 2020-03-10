@@ -3,7 +3,6 @@
 // @ts-ignore
 import RpcRequest from './rpcRequest'
 import RpcResponse from './rpcResponse'
-import msgpack from 'msgpack-lite'
 import RpcError from './rpcError'
 import OperationTimeoutError from './operationTimeoutError'
 
@@ -107,7 +106,7 @@ export default class BridgeRpc {
   ): Promise<RpcResponse> {
     const id = BridgeRpc.randomString()
     this.rawSocket.send(
-      msgpack.encode({
+      JSON.stringify({
         bridgerpc: '1.0',
         method: method,
         data: data,
@@ -133,7 +132,7 @@ export default class BridgeRpc {
    */
   public notify(method: string, data: any): void {
     this.rawSocket.send(
-      msgpack.encode({
+      JSON.stringify({
         bridgerpc: '1.0',
         method: method,
         data: data,
@@ -147,7 +146,8 @@ export default class BridgeRpc {
    * @param event Event object from WebSocket.onmessage
    */
   protected onMessage(event: any) {
-    const data = msgpack.decode(new Uint8Array(event.data))
+    if (event.type !== 'message') return
+    const data: any = JSON.parse(event.data)
     if (data.method !== undefined && data.method !== null) {
       // It's a request or notification
       if (data.id !== undefined && data.id !== null) {
@@ -156,7 +156,7 @@ export default class BridgeRpc {
         const handler = this.handlers[request.method]
         if (handler === null || handler === undefined) {
           // Method not found
-          this.rawSocket.send(BridgeRpc.methodNotFoundResponse(request).encodeToMessagePack())
+          this.rawSocket.send(BridgeRpc.methodNotFoundResponse(request).encode())
           return
         }
         let res: any
@@ -175,7 +175,7 @@ export default class BridgeRpc {
                 request,
                 'Method called, but no response.',
                 null
-              ).encodeToMessagePack()
+              ).encode()
             )
             return
           }
@@ -186,13 +186,13 @@ export default class BridgeRpc {
               request,
               'Error occurred when method calling.',
               e
-            ).encodeToMessagePack()
+            ).encode()
           )
           return
         }
         const response = res as RpcResponse
         response.id = request.id
-        this.rawSocket.send(response.encodeToMessagePack())
+        this.rawSocket.send(response.encode())
       } else {
         // It's a notification
         const notification = data as RpcRequest
