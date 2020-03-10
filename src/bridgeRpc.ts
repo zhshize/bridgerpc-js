@@ -34,6 +34,11 @@ export default class BridgeRpc {
     this.handlers = new RequestHandlerDictionary()
     this.notificationHandlers = new NotificationHandlerDictionary()
     this.callbacks = new CallbackDictionary()
+
+    // Handle ping message
+    this.onRequest('.ping', request => {
+      return 'pong'
+    })
   }
 
   protected _rawSocket: WebSocket | null = null
