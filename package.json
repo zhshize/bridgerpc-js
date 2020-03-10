@@ -1,6 +1,6 @@
 {
   "name": "bridgerpc",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "Bridge RPC client for browser and nodejs.",
   "keywords": [],
   "main": "dist/bridgerpc.umd.js",
@@ -85,8 +85,11 @@
     "@commitlint/cli": "^7.1.2",
     "@commitlint/config-conventional": "^7.1.2",
     "@types/jest": "^23.3.2",
+    "@types/lodash.camelcase": "^4.3.6",
     "@types/msgpack-lite": "^0.1.6",
     "@types/node": "^10.11.0",
+    "@types/rollup-plugin-json": "^3.0.2",
+    "@types/rollup-plugin-node-resolve": "^4.1.0",
     "colors": "^1.3.2",
     "commitizen": "^3.0.0",
     "coveralls": "^3.0.2",
@@ -120,6 +123,5 @@
     "typedoc": "^0.14.2",
     "typescript": "^3.0.3"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }
