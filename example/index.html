@@ -13,17 +13,17 @@
 <script type="application/ecmascript">
   // import msgpack from 'msgpack-lite';
 
-  const BridgeRpc = bridgerpc.default;
+  const BridgeRpc = bridgeRpc.default;
   function connect() {
-    const rpc = new BridgeRpc("wss://localhost:5001/");
+    const rpc = new BridgeRpc("ws://localhost:5000/");
     rpc.onRequest("sayHi", (request) => {
-      console.log(msgpack.decode(request.data));
-      return msgpack.encode("gogo");
+      console.log(request.data);
+      return "gogo";
     });
     rpc.onConnect(() => {
-      const req = rpc.request("greet", msgpack.encode("joe"));
+      const req = rpc.request("greet", "joe");
       req.then(response => {
-        console.log(msgpack.decode(response));
+        console.log(response.result);
       });
     });
   }
